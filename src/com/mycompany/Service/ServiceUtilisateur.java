@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.gui.SessionManager;
-import com.mycompany.gui.SplashScreenForm;
+import com.mycompany.gui.WalkthruForm;
 
 import java.util.Map;
 import javafx.scene.text.Text;
@@ -202,7 +202,7 @@ public class ServiceUtilisateur {
         String url ="http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/images_user?img="+photo;
                 EncodedImage placeholder = EncodedImage.createFromImage(Resources.getGlobalResources().getImage("photo-profile.jpg"), false);
                 Image urli = URLImage.createToStorage(placeholder,"Medium_"+url, url,URLImage.RESIZE_SCALE);
-                System.out.println("url = "+urli);
+                
         return urli;        
     }
      
