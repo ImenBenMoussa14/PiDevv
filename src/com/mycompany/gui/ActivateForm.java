@@ -36,7 +36,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.gui.BaseForm;
-import com.mycompany.gui.NewsfeedForm;
+//import com.mycompany.gui.NewsfeedForm;
 import com.sun.mail.smtp.SMTPTransport;
 import java.io.IOException;
 
