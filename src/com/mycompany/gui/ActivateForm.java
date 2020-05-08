@@ -77,12 +77,11 @@ public class ActivateForm extends BaseForm {
         signIn.setUIID("CenterLink");
         
         Container content = BoxLayout.encloseY(
-                                                        new Label(res.getImage("work2.png"), "CenterLabel"),
+         new Label(res.getImage("work2.png"), "CenterLabel"),
 
                 new FloatingHint(email),
                 createLineSeparator(),
                 signUp,
-
                 FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
         );
         content.setScrollableY(true);

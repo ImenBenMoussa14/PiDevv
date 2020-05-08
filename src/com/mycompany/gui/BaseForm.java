@@ -103,8 +103,8 @@ public class BaseForm extends Form {
                         new Label(ServiceUtilisateur.UrlImage(SessionManager.getPhoto()), "PictureWhiteBackgrond"))
         ));
         tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(res).show());
-        tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(res).show());
-        tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
+       // tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(res).show());
+       // tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
                 tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Deconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
             new SignInForm(res).show();
@@ -113,6 +113,8 @@ public class BaseForm extends Form {
             Storage.getInstance().clearCache();
             System.out.println(SessionManager.getUserName());
         });
+         tb.addMaterialCommandToSideMenu("Louer une vehicule", FontImage.MATERIAL_3D_ROTATION, e -> new AffichageVehicule(res).show());
+        tb.addMaterialCommandToSideMenu("Mes Vehicules", FontImage.MATERIAL_WIDGETS, e -> new MesVehicules(res).show());
         refreshTheme();
         
         

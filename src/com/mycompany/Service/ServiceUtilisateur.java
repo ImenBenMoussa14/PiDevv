@@ -19,9 +19,10 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.util.Resources;
-import com.mycompany.Entities.Reclamation;
+//import com.mycompany.Entities.Reclamation;
 import com.mycompany.Entities.Utilisateur;
-import com.mycompany.gui.AcceuillForm;
+import com.mycompany.gui.AffichageVehicule;
+//import com.mycompany.gui.AcceuillForm;
 import com.mycompany.gui.NewsfeedForm;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,8 +58,8 @@ public class ServiceUtilisateur {
     }
     
     
-    public  void login(TextField username,TextField password,Resources res) {
-        String  url = "http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/login?username="+username.getText().toString()+"&password="+password.getText().toString()
+public  void login(TextField username,TextField password,Resources res) {
+        String  url = "http://localhost/ProjetSymfony/test/web/app_dev.php/VehiculeBundle/login?username="+username.getText().toString()+"&password="+password.getText().toString()
                    ;
                 req = new ConnectionRequest(url,false);
                req.setUrl(url);
@@ -66,16 +67,13 @@ public class ServiceUtilisateur {
                 //req.addArgument("password",password.getText());
                 req.addResponseListener((action) -> {
                      try {
-            
+
                             JSONParser j = new JSONParser();
                             String json = new String(req.getResponseData()) + "";
                             if (json.equals("failed")){
-
                                 Dialog.show("Echec d'authenfication", "username ou mot de passe éronné", "Ok", null);
-                             
                             }
                             else{
-
                             System.out.println("hello ="+ json);
 
                                Map<String, Object> user = j.parseJSON(new CharArrayReader(json.toCharArray()));
@@ -91,15 +89,10 @@ public class ServiceUtilisateur {
                                 SessionManager.setPhoto(user.get("photo").toString());
                                 }
                             
-                                if(SessionManager.getUserName().equals("jihene")&& SessionManager.getPass().equals("123456")) {
-                                    new AcceuillForm(res).show();
-                                }
-                                else if(user.size()>0 ) {
-                                           
-
-                                new NewsfeedForm(res).show();
-
-                            }
+           
+                                 if(user.size()>0 ) {
+                               new AffichageVehicule(res).show();
+                           }
                             
                             }
                             
@@ -111,8 +104,9 @@ public class ServiceUtilisateur {
                 });
                               NetworkManager.getInstance().addToQueue(req);
           
-    }
+    }    
     
+        
     
     
     
@@ -122,7 +116,7 @@ public class ServiceUtilisateur {
      {
         ArrayList<Utilisateur> listUsers = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-                con.setUrl("http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/utilisateurs/all");
+                con.setUrl("http://localhost/ProjetSymfony/test/web/app_dev.php/VehiculeBundle/allUsers");
 
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -171,7 +165,7 @@ public class ServiceUtilisateur {
      public String getUsername(String us) {
         ArrayList<String> listTopics = new ArrayList<>();
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl("http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/login?username="+us);
+        con.setUrl("http://localhost/ProjetSymfony/test/web/app_dev.php/VehiculeBundle/login?username="+us);
         con.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -259,3 +253,6 @@ public class ServiceUtilisateur {
     
     
       
+
+
+
