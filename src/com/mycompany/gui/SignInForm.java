@@ -99,16 +99,18 @@ public class SignInForm extends BaseForm {
         signIn.requestFocus();
        signIn.addActionListener((e) ->{
            
-                   if(username.getText().equals("jihen") && password.getText().equals("1234"))
-                       //   new AcceuillForm(res).show();
-                       ;
-                   else
-                   {
-    //InfiniteProgress ip = new InfiniteProgress();
-   // final Dialog ipDlg = ip.showInifiniteBlocking();
+                  
+                   
+//InfiniteProgress ip = new InfiniteProgress();
+   //      final Dialog ipDlg = ip.showInifiniteBlocking();
         ServiceUtilisateur.getInstance().login(username, password, res);
-                   } 
-                });  
+                   
+                    
+                });
+              
+             
+        
+      
        // facebook.addActionListener(e -> new UserForm().show());
                 
     }

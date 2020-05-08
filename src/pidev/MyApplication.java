@@ -13,6 +13,7 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
+import com.mycompany.gui.AffichageVehicule;
 import com.mycompany.gui.NewsfeedForm;
 import com.mycompany.gui.SessionManager;
 import com.mycompany.gui.SplashScreenForm;
@@ -54,7 +55,7 @@ public class MyApplication {
             return;
         }
              if(SessionManager.getUserName()!= null ){
-                        new NewsfeedForm(theme).show();
+                      new AffichageVehicule(theme).show();
                     }
              else
         new SplashScreenForm(theme).show();

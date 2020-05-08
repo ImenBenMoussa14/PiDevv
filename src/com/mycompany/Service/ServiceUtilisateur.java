@@ -23,7 +23,7 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.Entities.Utilisateur;
 import com.mycompany.gui.AffichageVehicule;
 //import com.mycompany.gui.AcceuillForm;
-import com.mycompany.gui.NewsfeedForm;
+//import com.mycompany.gui.NewsfeedForm;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,8 +104,7 @@ public  void login(TextField username,TextField password,Resources res) {
                 });
                               NetworkManager.getInstance().addToQueue(req);
           
-    }    
-    
+    }
         
     
     
