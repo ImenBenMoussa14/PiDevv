@@ -14,7 +14,7 @@ import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.mycompany.gui.AffichageVehicule;
-import com.mycompany.gui.NewsfeedForm;
+//import com.mycompany.gui.NewsfeedForm;
 import com.mycompany.gui.SessionManager;
 import com.mycompany.gui.SplashScreenForm;
 

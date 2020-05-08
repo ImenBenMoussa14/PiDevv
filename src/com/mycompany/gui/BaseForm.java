@@ -102,7 +102,7 @@ public class BaseForm extends Form {
                 FlowLayout.encloseCenterBottom(
                         new Label(ServiceUtilisateur.UrlImage(SessionManager.getPhoto()), "PictureWhiteBackgrond"))
         ));
-        tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(res).show());
+//        tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(res).show());
        // tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(res).show());
        // tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
                 tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
