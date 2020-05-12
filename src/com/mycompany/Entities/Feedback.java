@@ -14,16 +14,21 @@ public class Feedback {
     private int iduser;
     private int id_feed;
     private String description;
+
+    public Feedback() {
+    }
     private int note;
     private String image;
     private String datefeedback;
+    private int livreur;
 
-    public Feedback(int iduser, String description, int note, String image, String datefeedback) {
+    public Feedback(int iduser, String description, int note, String image, String datefeedback,int livreur) {
         this.iduser = iduser;
         this.description = description;
         this.note = note;
         this.image = image;
         this.datefeedback = datefeedback;
+        this.livreur = livreur;
     }
 
     public Feedback(int iduser, int id_feed, String description, int note, String image, String datefeedback) {
@@ -35,6 +40,7 @@ public class Feedback {
         this.datefeedback = datefeedback;
     }
 
+    
     public int getIduser() {
         return iduser;
     }
@@ -86,6 +92,14 @@ public class Feedback {
     @Override
     public String toString() {
         return "Feedback{" + "iduser=" + iduser + ", id_feed=" + id_feed + ", description=" + description + ", note=" + note + ", image=" + image + ", datefeedback=" + datefeedback + '}';
+    }
+
+    public int getLivreur() {
+        return livreur;
+    }
+
+    public void setLivreur(int livreur) {
+        this.livreur = livreur;
     }
     
     

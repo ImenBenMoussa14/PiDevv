@@ -85,12 +85,7 @@ public class ProfileForm extends BaseForm {
         email.setUIID("TextFieldBlack");
         addStringValue("email", email);
         
-        Vector<String> VectorNiveau = new Vector();
-        VectorNiveau.add("3A");
-        VectorNiveau.add("3B");
-        VectorNiveau.add("4BI");
-        VectorNiveau.add("4");
-        VectorNiveau.add("5");
+        
         
        
         

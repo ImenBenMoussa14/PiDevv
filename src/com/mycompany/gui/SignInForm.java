@@ -127,4 +127,19 @@ public class SignInForm extends BaseForm {
        return users;
         
     }
+   
+   /*
+    Validator val = new Validator();
+        val.setShowErrorMessageForFocusedComponent(true);
+        val.addConstraint(username,
+                new GroupConstraint(
+                        new LengthConstraint(1, "Username vide !"),
+                        new RegexConstraint("^([a-zA-Z]*)$", "Veuillez saisir que des caracteres")));
+        val.addConstraint(password, new LengthConstraint(1, "Mot de passe vide !"));
+
+        val.addSubmitButtons(connect);
+    }
+   
+   
+   */
 }

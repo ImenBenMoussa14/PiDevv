@@ -155,24 +155,34 @@ public class DetailReclamationForm extends BaseForm {
         description.setUIID("TextFieldBlack");
         addStringValue("Description", description);
         String etat=" ";
+            TextField date = new TextField(cd.getDate(), "date");
+        description.setUIID("TextFieldBlack");
+        addStringValue("date", date);
+
+                TextField etatTxt = new TextField(String.valueOf(cd.getEtat()), "Titre reclamation");
+
+        etatTxt.setUIID("TextFieldBlack");
+        
+        
+        addStringValue("Etat ",etatTxt );
+        System.out.println("*/*/*/*/*/*/*/"+cd.getEtat());
         if(cd.getEtat()==0) {
            etat = "Non Traiter";
+           etatTxt.setText(etat);
         }
         else {
             etat="Traite";
            btnmodif.setText("Cloture");
+           titre.setEnabled(false);
+                      etatTxt.setText(etat);
+
+           etatTxt.setEnabled(false);
+           date.setEnabled(false);
         
         }
-         TextField user = new TextField(etat, "Etat");
-        description.setUIID("TextFieldBlack");
-        
-        
-        addStringValue("Etat ",user );
-        
-        TextField date = new TextField(cd.getDate(), "date");
-        description.setUIID("TextFieldBlack");
-        addStringValue("date", date);
 
+        
+    
                 addStringValue("", btnmodif);
 
         

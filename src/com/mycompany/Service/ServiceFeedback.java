@@ -22,13 +22,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONArray;
 
 /**
  *
  * @author Chédy
  */
 public class ServiceFeedback {
-    
+         int  nbrAfterConvert;
+          String nbrBeforeConvert;
     
       public ArrayList<Feedback> reclamations;
     
@@ -48,43 +50,44 @@ public class ServiceFeedback {
     }
 
      
-    
-    
-    
-    public ArrayList<Employe> getFeedbacks() 
+     public ArrayList<Feedback> getFeedbacks() 
      {
-        ArrayList<Employe> listReclamation = new ArrayList<>();
-        ConnectionRequest con = new ConnectionRequest();
-                con.setUrl("http://127.0.0.1/ProjetWebSymfony/test/web/app_dev.php/api/livreurs/all");
+        ArrayList<Feedback> listFeedback = new ArrayList<>();
+                req.setUrl("http://127.0.0.1/ProjetWebSymfony/test/web/app_dev.php/api/feedbacks/all");
 
-        con.addResponseListener(new ActionListener<NetworkEvent>() {
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 JSONParser jsonp;                
                 jsonp = new JSONParser();
                 try {
                     //renvoi une map avec clé = root et valeur le reste
-                    Map<String, Object> mapReclamations = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                    Map<String, Object> mapFeedbacks = jsonp.parseJSON(new CharArrayReader(new String(req.getResponseData()).toCharArray()));
 
-                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapReclamations.get("root");
+                    List<Map<String, Object>> listOfMaps = (List<Map<String, Object>>) mapFeedbacks.get("root");
 
                     for (Map<String, Object> obj : listOfMaps) {
-                        Employe re = new Employe();
-                        float id = Float.parseFloat(obj.get("idEmp").toString());
-                    //    float idAuteur = Float.parseFloat(obj.get("id_auteur").toString());
-                        String contenu = obj.get("username").toString();
-                        String date=obj.get("email").toString();
-                        String image = obj.get("mission").toString();
+                        Feedback feedback = new Feedback();
+                                        Map<String, Object> livreur = (Map<String, Object>)obj.get("livreur");
+
+                        float id = Float.parseFloat(obj.get("idFeed").toString());
+                        float note = Float.parseFloat(obj.get("note").toString());
+                        String contenu = obj.get("description").toString();
+                        String date=obj.get("datefeedback").toString();
+                        String f = obj.get("image").toString();         
+                        float liv = Float.parseFloat(livreur.get("idEmp").toString());
                         
-                        
-                            
-                                    
-                        re.setID_emp((int)id);
-                        re.setUSERNAME(contenu);
-                        re.setMISSION(image);
-                       
-                        listReclamation.add(re);
-                        System.out.println("data livreur => "+listReclamation.toString());
+
+                        feedback.setLivreur((int)liv);
+                                
+                        System.out.println("COCOCOCOCOCOCOC I AM HERE = "+liv);
+                        feedback.setId_feed((int)id);
+                        feedback.setDatefeedback(date);
+                        feedback.setDescription(contenu);
+                       feedback.setNote((int)note);
+                       feedback.setImage(f);
+                        listFeedback.add(feedback);
+                        System.out.println("data feedback => "+listFeedback.toString());
 
                     }
                 } catch (IOException ex) {
@@ -93,16 +96,43 @@ public class ServiceFeedback {
 
             }
         });
-        NetworkManager.getInstance().addToQueueAndWait(con);
-        return listReclamation;
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return listFeedback;
     }
+    
+    
+    public String getNomLivreur(int id) 
+     {                    Employe employe = new Employe();
+
+     JSONArray s;
+        ConnectionRequest con = new ConnectionRequest();
+                con.setUrl("http://127.0.0.1/ProjetWebSymfony/test/web/app_dev.php/api/livreurs?idEmp="+id);
+
+        con.addResponseListener((NetworkEvent e) -> {
+            JSONParser jsonp = new JSONParser();
+            try {
+                Map<String, Object> obj = jsonp.parseJSON(new CharArrayReader(new String(con.getResponseData()).toCharArray()));
+                employe.setUSERNAME(obj.get("username").toString());
+                
+
+            } catch (IOException ex) {
+                System.out.println("error related to sql :(");
+            }
+            String str = new String(con.getResponseData());
+            System.out.println(str);
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+        return  employe.getUSERNAME();
+    }
+    
 
     public void ajouterNoteLivreur(Rating rating) {
         
                 ConnectionRequest con = new ConnectionRequest();
                 
                       String Url ="http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/livreur/add/rate?ID_emp="+rating.getId()+
-                              "&iduser="+SessionManager.getId()+"&note="+rating.getNote();
+                              "&iduser="+SessionManager.getId()+"&note="+rating.getNote()+"&";
 
         con.setUrl(Url);
 
@@ -118,7 +148,7 @@ public class ServiceFeedback {
       
                 ConnectionRequest con = new ConnectionRequest();
                 
-                      String Url = "http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/feedbacks/add?description="+rec.getDescription()+"&image="+rec.getImage()+"&iduser="+rec.getIduser()+"&note="+rec.getNote();
+                      String Url = "http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/feedbacks/add?description="+rec.getDescription()+"&image="+rec.getImage()+"&iduser="+rec.getIduser()+"&note="+rec.getNote()+"&idlivreur="+rec.getLivreur();
         con.setUrl(Url);
 
         con.addResponseListener((e) -> {
@@ -126,6 +156,26 @@ public class ServiceFeedback {
             System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
+    }
+    
+    
+    
+    public int getNbrFeedback() {
+        String url ="http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/feedbacks/getNbr";
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+   
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               nbrBeforeConvert  = new String(req.getResponseData());
+              nbrAfterConvert   = Integer.parseInt(nbrBeforeConvert);
+            }
+            
+        });
+               NetworkManager.getInstance().addToQueueAndWait(req);
+ 
+        return nbrAfterConvert;
+        
     }
       
       

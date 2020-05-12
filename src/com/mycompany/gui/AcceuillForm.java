@@ -83,7 +83,7 @@ BaseForm form;
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("maisonLogo.png"), spacer1, "Dashboard");
+        addTab(swipe, res.getImage("work2.png"), spacer1, "Dashboard");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -157,10 +157,7 @@ BaseForm form;
             updateArrowPosition(popular, arrow);
         });
         bindButtonSelection(popular, arrow);
-                popular.addActionListener((e)->{
-                  //new AjoutReclamationForm(res).show();
-                  
-        });
+             
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
@@ -168,6 +165,8 @@ BaseForm form;
         //get Data from json and add them to ListView
         for(RecFeedCat rec : ServiceRecFeedCat.getInstance().getAllRecFeedCat()) {
  
+            
+            
                       String url="http://127.0.0.1/ProjetWebSymfony/test/web/uploads/catRecFeed_image/"+rec.getImage();
             System.out.println("url cat = "+url);
                       Image placeholder = Image.createImage(120, 90);
@@ -180,6 +179,13 @@ BaseForm form;
         
       
         }
+        
+           popular.addActionListener((e)->{
+                 new   TraiterReclamation(res).show();
+                    
+                  //new AjoutReclamationForm(es).show();
+                  
+        });
     }
     
     private void updateArrowPosition(Button b, Label arrow) {

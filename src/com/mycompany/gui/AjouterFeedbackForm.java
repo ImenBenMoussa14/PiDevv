@@ -45,6 +45,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.Entities.Employe;
 import com.mycompany.Entities.Feedback;
 import com.mycompany.Entities.Rating;
 import com.mycompany.Entities.Reclamation;
@@ -66,7 +67,7 @@ String path1;
                         Image img = null;
 int rating;
                       Form current;
-    public AjouterFeedbackForm(Resources res) {
+    public AjouterFeedbackForm(Resources res,Feedback f) {
         super("Newsfeed", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         current=this;
@@ -235,7 +236,7 @@ int rating;
                    Feedback r = new Feedback(SessionManager.getId(),
                            String.valueOf( description.getText()).
                            toString(),rating,path1,
-                           format.format(new Date())
+                           format.format(new Date()),f.getLivreur()
                           );
                    System.out.println("file ser = "+fileNameInServer);
                                       System.out.println("file othr = "+r.toString());
@@ -357,14 +358,14 @@ int rating;
         });
     }
 
-    private void initStarRankStyle(Style s, Image star) {
+    public  void initStarRankStyle(Style s, Image star) {
         s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
         s.setBorder(Border.createEmpty());
         s.setBgImage(star);
         s.setBgTransparency(0);
     }
 
-    private Slider createStarRankSlider() {
+    public Slider createStarRankSlider() {
         Slider starRank = new Slider();
         starRank.setEditable(true);
         starRank.setMinValue(0);

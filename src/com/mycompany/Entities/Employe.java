@@ -75,6 +75,12 @@ public class Employe {
         return PRENOM;
     }
 
+    public Employe(String USERNAME) {
+        this.USERNAME = USERNAME;
+    }
+
+    
+    
     public void setPRENOM(String PRENOM) {
         this.PRENOM = PRENOM;
     }

@@ -240,7 +240,7 @@ public class ServiceUtilisateur {
                         String s = new String(data);
                         System.out.println(s);                                                
                         if (s.equals("success")) {                            
-                        } else {
+                        } else { 
                             Dialog.show("Erreur", "Echec de modification", "Ok", null);
                         }                    
                 });
@@ -251,6 +251,8 @@ public class ServiceUtilisateur {
             ex.printStackTrace();
         }
     }
+    
+   
     
         
      

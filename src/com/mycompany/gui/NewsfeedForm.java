@@ -20,6 +20,7 @@
 package com.mycompany.gui;
 
 import com.codename1.components.ImageViewer;
+import com.codename1.components.MultiButton;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -62,6 +63,7 @@ public class NewsfeedForm extends BaseForm {
     
     Form current;
 BaseForm form;
+   MultiButton mb;
         public NewsfeedForm(Resources res)  {
         super("Newsfeed", BoxLayout.y());
             current= this;
@@ -128,12 +130,12 @@ BaseForm form;
         popular.setUIID("SelectBar");
         RadioButton feedback = RadioButton.createToggle("Feedback", barGroup);
         feedback.setUIID("SelectBar");
-        RadioButton profile = RadioButton.createToggle("Profile", barGroup);
-        feedback.setUIID("SelectBar");
+        RadioButton profile = RadioButton.createToggle("Statistique", barGroup);
+        profile.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(2, all, popular),
+                GridLayout.encloseIn(3, all, popular,profile),
                 FlowLayout.encloseBottom(arrow)
         ));
         all.setSelected(true);
@@ -155,15 +157,17 @@ BaseForm form;
             arrow.setVisible(true);
             updateArrowPosition(popular, arrow);
         });
-        bindButtonSelection(popular, arrow);
-                popular.addActionListener((e)->{
-                  //new AjoutReclamationForm(res).show();
+        bindButtonSelection(profile, arrow);
+                profile.addActionListener((e)->{
+                  new StatistiqueForm(res).show();
                   
         });
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
+                Container cateogires = new Container(BoxLayout.y());
+                cateogires.setUIID("List");
         //get Data from json and add them to ListView
         for(RecFeedCat rec : ServiceRecFeedCat.getInstance().getAllRecFeedCat()) {
  
@@ -175,13 +179,37 @@ BaseForm form;
             
             EncodedImage enc = EncodedImage.createFromImage(placeholder, false);
 
-            URLImage urlim = URLImage.createToStorage(enc, url,url, URLImage.RESIZE_SCALE);
-
-            addButton(urlim, rec.getNom(),rec);
+            Image  urlim = URLImage.createToStorage(enc, url,url, URLImage.RESIZE_SCALE);
 
         
-      
+                    ScaleImageLabel  image = new ScaleImageLabel(urlim);
+
+                    Container imgC= new Container();
+                    image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+            imgC.add(image);
+                
+                       
+                
+             mb = new MultiButton(rec.getNom());
+                mb.setTensileLength(5);
+                mb.setUIID("ListItem");
+                mb.setTextLine4("Prix :hiii");
+                mb.setIcon(urlim);
+                
+              
+                mb.add(LEFT,urlim.scaled(400, 280));
+                 add(FlowLayout.encloseCenter(mb));
+
+          //  addButton(urlim, rec.getNom(),rec);
+          
+
+
         }
+               mb.addActionListener(e -> {
+           new AjoutReclamationForm(Resources.getGlobalResources()).show();
+               
+           });
+      
     }
     
     private void updateArrowPosition(Button b, Label arrow) {

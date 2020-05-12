@@ -104,7 +104,7 @@ public class BaseForm extends Form {
         ));
         tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(res).show());
-        tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
+      //  tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
                 tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Deconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
             new SignInForm(res).show();

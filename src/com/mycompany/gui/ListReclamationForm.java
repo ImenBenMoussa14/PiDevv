@@ -6,6 +6,7 @@
 package com.mycompany.gui;
 
 import com.codename1.components.ImageViewer;
+import com.codename1.components.MultiButton;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -27,6 +28,7 @@ import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
+import com.codename1.ui.Slider;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
@@ -40,6 +42,7 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.Entities.Feedback;
 import com.mycompany.Entities.Reclamation;
 import com.mycompany.Service.ServiceReclamation;
 import java.io.IOException;
@@ -157,6 +160,16 @@ public class ListReclamationForm extends BaseForm {
   //          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //            String dateS = format.format(rec.getDate());
             addButton(urlim, rec.getObjet() , rec);
+
+        
+                    ScaleImageLabel  image = new ScaleImageLabel(urlim);
+
+                    Container imgC= new Container();
+                    image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+                
+             
+
+       //     addButton(urlim, rec.getObjet(),rec);
         }
     }
 
@@ -210,6 +223,16 @@ public class ListReclamationForm extends BaseForm {
     }
 
 
+  
+    private void bindButtonSelection(Button b, Label arrow) {
+        b.addActionListener(e -> {
+            if (b.isSelected()) {
+                updateArrowPosition(b, arrow);
+            }
+        });
+    }
+    
+    
     private void addButton(Image img, String title ,Reclamation evv) {
         int height = Display.getInstance().convertToPixels(11.5f);
         int width = Display.getInstance().convertToPixels(14f);
@@ -221,28 +244,20 @@ public class ListReclamationForm extends BaseForm {
         ta.setUIID("NewsTopLine");
         ta.setEditable(false);
 
-     Button details = new Button("");
-       details.setUIID("Details");       
+     //Label details = new Label("Notez moi","CenterLabel");
+    //   details.setUIID("Details");       
       
        cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
-                       ta,
-                       details
+                       ta
                ));
        
-       image.addActionListener((ActionEvent e) -> {
-           new DetailReclamationForm(Resources.getGlobalResources(), evv).show();
+       //image.addActionListener((ActionEvent e) -> {
+         // new AjouterFeedbackForm(Resources.getGlobalResources()).show();
           
-               });
+           //    });
         add(cnt);
-        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+        image.addActionListener(e -> new DetailReclamationForm(Resources.getGlobalResources(), evv).show());
     }
 
-    private void bindButtonSelection(Button b, Label arrow) {
-        b.addActionListener(e -> {
-            if (b.isSelected()) {
-                updateArrowPosition(b, arrow);
-            }
-        });
-    }
 }

@@ -59,6 +59,7 @@ public class ModifierCategorieRecFeedForm extends BaseForm {
         ScaleImageLabel sl = new ScaleImageLabel(img);
         sl.setUIID("BottomPad");
         sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
+    //    Label pp = new Label(Ser.UrlImage(SessionManager.getPhoto()), "PictureWhiteBackgrond");
 
 
         add(LayeredLayout.encloseIn(
@@ -106,27 +107,29 @@ public class ModifierCategorieRecFeedForm extends BaseForm {
                 picture.addActionListener(e -> {
             i = Capture.capturePhoto(Display.getInstance().getDisplayWidth(), -1);
             if (i != null) {
+                try{
                 Image im;
-                //im = Image.createImage(i);
-                // im = im.scaled(res.getImage("photo-profile.jpg").getWidth(),
-                //      res.getImage("photo-profile.jpg").getHeight());
-                //     pp.setIcon(im);
+                im = Image.createImage(i);
+                 im = im.scaled(res.getImage("photo-profile.jpg").getWidth(),
+                      res.getImage("photo-profile.jpg").getHeight());
+              //       pp.setIcon(im);
                 System.out.println(i);
                 path.setText(i);
                 
                 //System.out.println("The new image's name is : "+Session.getTmpImage());
+            }catch(Exception execption ) {
+                execption.printStackTrace();
+            }
             }
         });
                 
         ajout.addActionListener((edit)-> {
           
-                  //  prix = PrixEvent.getText();
-                //}
-           // String quota = quotaEvent.getText();
+              
             
             RecFeedCat recFeed = new RecFeedCat(edit_cat.getId_cat(),edit_cat.getNom(),edit_cat.getImage());
-              ServiceRecFeedCat.getInstance().editRecFeedCat(recFeed,path.getText());
-                 new AcceuillForm(res).show();                    
+            ServiceRecFeedCat.getInstance().editRecFeedCat(recFeed,path.getText());
+            new AcceuillForm(res).show();                    
             refreshTheme();    
             
             

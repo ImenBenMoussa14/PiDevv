@@ -1,5 +1,11 @@
 package com.codename1.camerakit;
 
+import static com.codename1.camerakit.Constants.FACING_BACK;
+import static com.codename1.camerakit.Constants.FACING_FRONT;
+import static com.codename1.camerakit.Constants.FLASH_AUTO;
+import static com.codename1.camerakit.Constants.FLASH_OFF;
+import static com.codename1.camerakit.Constants.FLASH_ON;
+import static com.codename1.camerakit.Constants.FLASH_TORCH;
 import com.codename1.camerakit.impl.CameraCallbacks;
 import com.codename1.camerakit.impl.CameraNativeAccess;
 import com.codename1.system.NativeLookup;

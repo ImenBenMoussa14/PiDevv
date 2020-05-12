@@ -17,6 +17,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.io.Storage;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
@@ -29,6 +30,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.mycompany.Entities.Reclamation;
+import com.mycompany.Entities.Utilisateur;
 import com.mycompany.gui.MesReclamations;
 import com.mycompany.gui.SessionManager;
 import java.io.ByteArrayInputStream;
@@ -47,6 +49,8 @@ public class ServiceReclamation {
     
     public ArrayList<Reclamation> reclamations;
     
+                int  nbrAfterConvert;
+          String nbrBeforeConvert;
     public static ServiceReclamation instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -64,22 +68,35 @@ public class ServiceReclamation {
 
        
     public void ajoutReclamation(Reclamation rec) {
-      
+   
                 ConnectionRequest con = new ConnectionRequest();
-                
                       String Url = "http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/reclamations/addReclamation?objet="
                               +rec.getObjet()+"&description="+rec.getDescription()+"&image="+rec.getImage()+"&iduser="+rec.getIduser()+"&id_cat="+rec.getCat();
-
-                //+ "&idUser="+SessionManager.getId();
         con.setUrl(Url);
-
         con.addResponseListener((e) -> {
             String str = new String(con.getResponseData());
             System.out.println(str);
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
     }
-      
+     
+    public int getNbrReclamation( ) {
+  
+        String url ="http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/reclamations/getNbr";
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+   
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+               nbrBeforeConvert  = new String(req.getResponseData());
+              nbrAfterConvert   = Integer.parseInt(nbrBeforeConvert);
+            }
+            
+        });
+               NetworkManager.getInstance().addToQueueAndWait(req);
+ 
+        return nbrAfterConvert;
+    }
       
       
       
@@ -107,11 +124,19 @@ public class ServiceReclamation {
                     for (Map<String, Object> obj : listOfMaps) {
                         Reclamation re = new Reclamation();
                         float id = Float.parseFloat(obj.get("idRec").toString());
+                Map<String, Object> user = (Map<String, Object>)obj.get("user");
+
                         String contenu = obj.get("objet").toString();
                         String date=obj.get("description").toString();
                         String image = obj.get("image").toString();
+                        float iduser = Float.parseFloat(user.get("id").toString());  
+                        float etat = Float.parseFloat(obj.get("etat").toString());
+
+                        
                         //float cat =Float.parseFloat( obj.get("idc").toString());
                         re.setId_rec((int) id);
+                                             re.setIduser((int)iduser);
+
                         String pathweb = obj.get("webPath").toString();
                         //
                                  String DateS = obj.get("date").toString().substring(obj.get("date").toString().indexOf("timestamp")+10,obj.get("date").toString().lastIndexOf("}"));
@@ -128,7 +153,8 @@ String dateString = formatter.format(currentTime);
                         re.setImage(image);
                         re.setObjet(contenu);
                         re.setDescription(date);
-                        re.setWebPath(pathweb);
+                        re.setEtat((int)etat);
+                      //  re.setWebPath(pathweb);
                      //   re.setCat((int)cat);
                         System.out.println("cat = "+re.getCat());
                         
@@ -238,10 +264,54 @@ String dateString = formatter.format(currentTime);
         NetworkManager.getInstance().addToQueueAndWait(con);
         return listReclamation;
     }
+
+    public void traiterReclamation(Reclamation rec) {
+            
+        String url = "http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/reclamations/confirmerReclamation?id="+rec.getIduser();
+        req.setUrl(url);
+        
+          InfiniteProgress ip = new InfiniteProgress();
+        final Dialog ipDlg = ip.showInifiniteBlocking();
+                        ipDlg.show();
+
+         req.addResponseListener((NetworkEvent e) -> {
+            String str = new String(req.getResponseData());
+            
+            if(str.equals("success") )  {
+                ipDlg.dispose();
+                             System.out.println("response from server = "+str);
+
+                Dialog.show("Traité réclamation", "Une notification sera envoyé au client", new Command("OK"));
+            }
+           
+            
+             
+         });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    }
     
+    public void getUserByReclamation(int  id) {
+        String url ="http://localhost/ProjetWebSymfony/test/web/app_dev.php/api/reclamations/byUser?idRec="+id;
+        
+        
+        req.setUrl(url);
+        
+         req.addResponseListener((NetworkEvent e) -> {
+            String str = new String(req.getResponseData());
+            
+            
+             System.out.println("response from server = "+str);
+             
+         });
+                 
+        
+        NetworkManager.getInstance().addToQueueAndWait(req);
+    
+    }
+     
+}
   
 
 
 
 
-}

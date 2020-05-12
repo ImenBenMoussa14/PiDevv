@@ -27,6 +27,7 @@ import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.RadioButton;
+import com.codename1.ui.Slider;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
@@ -41,6 +42,7 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.Entities.Employe;
+import com.mycompany.Entities.Feedback;
 import com.mycompany.Entities.Reclamation;
 import com.mycompany.Service.ServiceFeedback;
 import com.mycompany.Service.ServiceReclamation;
@@ -119,16 +121,15 @@ public class ListLivreurForm extends BaseForm {
         partage.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
 
+       
+
       //   liste.addActionListener((e) -> {
         //     System.out.println("hii");
           //  MesReclamations a = new MesReclamations(res);
            // a.show();
         //});
         
-        partage.addActionListener((e) -> {
-            AjouterFeedbackForm a = new AjouterFeedbackForm(res);
-            a.show();
-        });
+       
 
         add(LayeredLayout.encloseIn(
                 GridLayout.encloseIn(3,liste,mesListes, partage),
@@ -148,21 +149,51 @@ public class ListLivreurForm extends BaseForm {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
 
-        ServiceFeedback serviceReclamation = new ServiceFeedback();
-        ArrayList<Employe> lis = serviceReclamation.getFeedbacks();
-        for (Employe rec : lis) {
+        ServiceFeedback serviceFeedback = new ServiceFeedback();
+        ArrayList<Feedback> lis = serviceFeedback.getFeedbacks();
+        for (Feedback rec : lis) {
        //     String url="http://127.0.0.1/ProjetWebSymfony/test/web/uploads/reclamation_image/"+rec.();
             
             Image placeholder = Image.createImage(120, 90);
             
             EncodedImage enc = EncodedImage.createFromImage(placeholder, false);
+               AjouterFeedbackForm aj = new AjouterFeedbackForm(res,rec);
+             Slider star = aj.createStarRankSlider();
+              partage.addActionListener((e) -> {
+            AjouterFeedbackForm a = new AjouterFeedbackForm(res,rec);
+            a.show();
             
+            
+        });
+             
+                     partage.setUIID("SelectBar");
             URLImage urlim = URLImage.createToStorage(enc, "news-item.jpg","news-item.jpg", URLImage.RESIZE_SCALE);
         Image img = res.getImage("user.png");
+        Button btn = new Button("Notez");
+        
+        //Get Livreur
+        if(rec.getNote() == 0) {
+           btn.setVisible(true);
+           star.setVisible(false);
+           
+        }
+        else {
+              btn.setVisible(false);
+           star.setVisible(true);
+                      star.setProgress(rec.getNote());
 
-  //          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        }
+
+        int id  = rec.getLivreur();
+       String nomLivreur = serviceFeedback.getNomLivreur(id);
+            System.out.println("here im liv = "+nomLivreur);
+        //
+
+
+        //          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 //            String dateS = format.format(rec.getDate());
-            addButton(img, rec.getUSERNAME(), rec);
+            addButton(img,nomLivreur, rec, btn, star);
+           
         }
     }
 
@@ -199,6 +230,10 @@ public class ListLivreurForm extends BaseForm {
         image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
         Label overlay = new Label(" ", "ImageOverlay");
 
+          
+
+               
+     //   star.setUIID("TextFieldBlack");
         Container page1
                 = LayeredLayout.encloseIn(
                        image,
@@ -216,7 +251,7 @@ public class ListLivreurForm extends BaseForm {
     }
 
 
-    private void addButton(Image img, String title ,Employe evv) {
+    private void addButton(Image img, String title ,Feedback evv,Button s,Slider star) {
         int height = Display.getInstance().convertToPixels(11.5f);
         int width = Display.getInstance().convertToPixels(14f);
         Button image = new Button(img.fill(width, height));
@@ -227,21 +262,21 @@ public class ListLivreurForm extends BaseForm {
         ta.setUIID("NewsTopLine");
         ta.setEditable(false);
 
-     Label details = new Label("Notez moi","CenterLabel");
+     //Label details = new Label("Notez moi","CenterLabel");
     //   details.setUIID("Details");       
       
        cnt.add(BorderLayout.CENTER, 
                BoxLayout.encloseY(
                        ta,
-                       details
+                       s,star
                ));
        
-       image.addActionListener((ActionEvent e) -> {
-           new AjouterFeedbackForm(Resources.getGlobalResources()).show();
+       //image.addActionListener((ActionEvent e) -> {
+         // new AjouterFeedbackForm(Resources.getGlobalResources()).show();
           
-               });
+           //    });
         add(cnt);
-        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
+        image.addActionListener(e -> new AjouterFeedbackForm(Resources.getGlobalResources(), evv).show());
     }
 
     private void bindButtonSelection(Button b, Label arrow) {

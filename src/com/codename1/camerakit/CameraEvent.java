@@ -10,7 +10,7 @@ package com.codename1.camerakit;
  * @author shai
  */
 public class CameraEvent {
-    private String type;
+  private String type;
     private String message;
     private String exceptionMessage;
     private byte[] jpeg;
