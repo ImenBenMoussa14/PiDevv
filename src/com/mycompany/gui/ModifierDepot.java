@@ -20,10 +20,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
 
-/**
- *
- * @author houss
- */
+
 public class ModifierDepot  extends BaseForm{
     
      public ModifierDepot(Resources res,Depot d) {
