@@ -16,7 +16,7 @@ public class Produit {
     private int id_depot;
     private String nom_pd;
     private int Quantite;
-    private String ADR;
+    private int iduser;
     
     public Produit(int id,int prix, String Etat, int categorie, String nom_pd, int Quantite) {
         this.id_pro=id;
@@ -25,7 +25,33 @@ public class Produit {
         this.categorie = categorie;
         this.nom_pd = nom_pd;
         this.Quantite = Quantite;
-        this.ADR=ADR;
+      
+    }
+    
+    
+     
+    
+
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
+  
+    public Produit( String photo, int poids, int prix, String Etat, String description, int id_depot,String nom_pd,  int Quantite,int categorie,  int iduser) {
+        
+        this.photo = photo;
+        this.poids = poids;
+        this.prix = prix;
+        this.description = description;
+        this.Etat = Etat;
+        this.categorie = categorie;
+        this.id_depot = id_depot;
+        this.nom_pd = nom_pd;
+        this.Quantite = Quantite;
+        this.iduser = iduser;
     }
 
       
@@ -49,14 +75,6 @@ public class Produit {
         this.nom_pd = nom_pd;
         this.prix = prix;
     }
-
-    public Produit(String photo, String nom_pd, int prix) {
-        this.photo = photo;
-        this.nom_pd = nom_pd;
-        this.prix = prix;
-
-    }
-    
     //Constructeur par copie amal
     
     public Produit(Produit p)
@@ -113,10 +131,6 @@ public class Produit {
         return Quantite;
     }
 
-    public String getADR() {
-        return ADR;
-    }
-
     public void setId_pro(int id_pro) {
         this.id_pro = id_pro;
     }
@@ -157,9 +171,7 @@ public class Produit {
         this.Quantite = Quantite;
     }
 
-    public void setADR(String ADR) {
-        this.ADR = ADR;
-    }
+   
  
 
 
@@ -197,14 +209,3 @@ public class Produit {
     
     
 }
-   
-    
-    
-    
-    
-
-    
-    
-    
-
-    

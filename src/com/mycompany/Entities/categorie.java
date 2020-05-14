@@ -8,7 +8,7 @@ package com.mycompany.Entities;
 
 public class categorie {
       Integer id;
-      int idpro;
+      
       String nom;
        String pht;
 
@@ -22,7 +22,7 @@ public class categorie {
 
     public categorie(int id, int idpro, String nom, String pht) {
         this.id = id;
-        this.idpro = idpro;
+      
         this.nom = nom;
         this.pht = pht;
     }
@@ -48,13 +48,7 @@ public class categorie {
         this.id = id;
     }
 
-    public int getIdpro() {
-        return idpro;
-    }
-
-    public void setIdpro(int idpro) {
-        this.idpro = idpro;
-    }
+   
 
     public String getNom() {
         return nom;
@@ -66,7 +60,7 @@ public class categorie {
 
     @Override
     public String toString() {
-        return "categorie{" + "id=" + id + ", idpro=" + idpro + ", nom=" + nom + ", pht=" + pht + '}';
+        return "categorie{" + "id=" + id +  ", nom=" + nom + ", pht=" + pht + '}';
     }
 
    

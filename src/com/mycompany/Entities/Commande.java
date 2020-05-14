@@ -34,6 +34,9 @@ public class Commande {
         this.id = id;
         this.adresse_dest = adresse_dest;
     }
+     public Commande(int id) {
+        this.id = id;
+    }
     
 
     public Commande(int id_commande, int id, Date date, String adresse_dest, int prix_total) {

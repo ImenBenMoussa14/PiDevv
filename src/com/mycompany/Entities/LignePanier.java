@@ -5,6 +5,7 @@
  */
 package com.mycompany.Entities;
 
+
 /**
  *
  * @author amall
@@ -14,6 +15,8 @@ public class LignePanier {
     private String libelle;
     private int prix;
     private int quantite=1;
+    private String photo;
+    private int stock;
 
     public LignePanier() {
     }
@@ -23,7 +26,29 @@ public class LignePanier {
         this.libelle = libelle;
         this.prix = prix;
     }
+   public LignePanier(int id_pro, String libelle, int prix, String photo) {
+        this.id_pro = id_pro;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.photo = photo;
+    }
 
+    public LignePanier(int id_pro, String libelle, int prix, String photo, int stock) {
+        this.id_pro = id_pro;
+        this.libelle = libelle;
+        this.prix = prix;
+        this.photo = photo;
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+   
     public int getId_pro() {
         return id_pro;
     }
@@ -40,6 +65,11 @@ public class LignePanier {
         return quantite;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+    
+
     public void setId_produit(int id_pro) {
         this.id_pro = id_pro;
     }
@@ -55,6 +85,11 @@ public class LignePanier {
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
     @Override
     public int hashCode() {
       return id_pro;
@@ -73,8 +108,14 @@ public class LignePanier {
          return false;
       return true;
     }
-     @Override
+ //    @Override
+   // public String toString() {
+     //   return new String( "LignePanier{" + "id_pro=" + id_pro + ", prix=" + String.valueOf(prix) + ", nom_pd=" + libelle + ", Quantite=" + quantite + ", photo=" + photo + '}');
+    //}
+
+    @Override
     public String toString() {
-        return new String( "LignePanier{" + "id_pro=" + id_pro + ", prix=" + String.valueOf(prix) + ", nom_pd=" + libelle + ", Quantite=" + quantite + '}');
+        return "LignePanier{" + "id_pro=" + id_pro + ", libelle=" + libelle + ", prix=" + prix + ", quantite=" + quantite + ", photo=" + photo + ", stock=" + stock + '}';
     }
+
 }
