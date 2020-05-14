@@ -23,7 +23,6 @@ import java.util.Map;
 public class ServiceProduit {
 
     public ArrayList<Produit> produits;
-    
     public static ServiceProduit instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -78,7 +77,46 @@ public class ServiceProduit {
         }
         return produits;
     }
-    
+    //needs fixing!!!!
+        public ArrayList<Produit> parsesearchProduits(String jsonText, String entry){
+        try {
+            produits=new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String,Object> produitsListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            
+            List<Map<String,Object>> list = (List<Map<String,Object>>)produitsListJson.get("root");
+            for(Map<String,Object> obj : list){
+                Produit p = new Produit();
+                
+                float id_pro= Float.parseFloat(obj.get("id").toString());
+                p.setId_pro((int)id_pro);
+                float poids= Float.parseFloat(obj.get("poids").toString());
+                p.setPoids((int)poids);
+                float prix= Float.parseFloat(obj.get("prix").toString());
+                p.setPrix((int)prix);
+//             float categorie= Float.parseFloat(obj.get("idcat").toString());
+          //   p.setCategorie((int)categorie);
+                 
+             float id_depot= Float.parseFloat(obj.get("idDepot").toString());
+              p.setId_depot((int)id_depot);
+                float Quantite= Float.parseFloat(obj.get("quantite").toString());
+                p.setQuantite((int)Quantite);
+             p.setPhoto(obj.get("photo").toString());
+                p.setDescription(obj.get("desription").toString());
+                p.setNom_pd(obj.get("libelle").toString());
+               p.setEtat(obj.get("etat").toString());
+               System.out.println("what is the entry?"+entry);
+             if(entry.equals(p.getNom_pd())){
+                produits.add(p);
+                System.out.println(produits);
+            }}
+            
+            
+        } catch (IOException ex) {
+                            System.out.println("error related to sql");
+        }
+        return produits;
+    }
     public ArrayList<Produit> getAllProduits(){
         String url = Statics.BASE_URL+"/produitVitrine/all";
         req.setUrl(url);
@@ -87,6 +125,24 @@ public class ServiceProduit {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 produits = parseProduits(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return produits;
+        
+
+    }
+    //needs fixing!!! 
+        public ArrayList<Produit> getSearchedProduits(){
+        final String en=Vitrine.entry;
+        String url = Statics.BASE_URL+"/produitVitrine/all";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                produits = parsesearchProduits(new String(req.getResponseData()),en);
                 req.removeResponseListener(this);
             }
         });
@@ -123,5 +179,3 @@ public class ServiceProduit {
 
    
 }
-
-
