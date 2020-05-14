@@ -56,6 +56,7 @@ public class SignUpForm extends BaseForm {
         password = new TextField("", "Password", 20, TextField.PASSWORD);
         confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
         emaill = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
+        
         Vector<String> VectorRole = new Vector();
         VectorRole.add("Client");
         VectorRole.add("Societe");

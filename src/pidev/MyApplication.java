@@ -13,7 +13,7 @@ import com.codename1.ui.Toolbar;
 import java.io.IOException;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
-import com.mycompany.gui.NewsfeedForm;
+import com.mycompany.gui.DepotList;
 import com.mycompany.gui.SessionManager;
 import com.mycompany.gui.SplashScreenForm;
 
@@ -53,11 +53,14 @@ public class MyApplication {
             current.show();
             return;
         }
-             if(SessionManager.getUserName()!= null ){
+        Resources themeDepot;
+          themeDepot = UIManager.initFirstTheme("/theme_depot");
+          new DepotList(themeDepot).show();
+          /*if(SessionManager.getUserName()!= null ){
                         new NewsfeedForm(theme).show();
                     }
              else
-        new SplashScreenForm(theme).show();
+        new SplashScreenForm(theme).show();*/
         
     }
 

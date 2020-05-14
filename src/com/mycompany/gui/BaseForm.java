@@ -50,8 +50,8 @@ import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import com.mycompany.Service.ServiceUtilisateur;
 
 
 /**
@@ -88,8 +88,15 @@ public class BaseForm extends Form {
     }
 
     protected void addSideMenu(Resources res) {
+        
+           Resources themeDepot;
+          themeDepot = UIManager.initFirstTheme("/theme_depot");
+          
+          Resources theme;
+        theme = UIManager.initFirstTheme("/theme_1");
         Toolbar tb = getToolbar();
-        Image img = res.getImage("back-logo.png");
+        
+        Image img = theme.getImage("back-logo.png");
         if(img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
             img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 3);
         }
@@ -100,14 +107,18 @@ public class BaseForm extends Form {
         tb.addComponentToSideMenu(LayeredLayout.encloseIn(
                 sl,
                 FlowLayout.encloseCenterBottom(
-                        new Label(ServiceUtilisateur.UrlImage(SessionManager.getPhoto()), "PictureWhiteBackgrond"))
+                    new Label("", "PictureWhiteBackgrond"))
         ));
-        tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(res).show());
-        tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(res).show());
-        tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
-                tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
+     //   tb.addMaterialCommandToSideMenu("Acceuil", FontImage.MATERIAL_DASHBOARD, e -> new NewsfeedForm(theme).show());
+      //  tb.addMaterialCommandToSideMenu("Reclamations", FontImage.MATERIAL_ACCESSIBILITY, (ActionEvent e) -> new AjoutReclamationForm(theme).show());
+             tb.addMaterialCommandToSideMenu("Depot", FontImage.MATERIAL_STORE, e -> new DepotList(themeDepot).show());
+         tb.addMaterialCommandToSideMenu("Depot Admin", FontImage.MATERIAL_STORE, e -> new DepotAdminList(themeDepot).show());
+            tb.addMaterialCommandToSideMenu("Mes Location", FontImage.MATERIAL_COLLECTIONS_BOOKMARK, e -> new MesLocation(themeDepot).show());
+              tb.addMaterialCommandToSideMenu("Chart", FontImage.MATERIAL_PIE_CHART, e -> new DisponibiliteChart(themeDepot).show());
+      //  tb.addMaterialCommandToSideMenu("Feedback", FontImage.MATERIAL_FEEDBACK, (ActionEvent e) -> new AjouterFeedbackForm(res).show());
+            //    tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(theme).show());
         tb.addMaterialCommandToSideMenu("Deconnexion", FontImage.MATERIAL_EXIT_TO_APP, e -> {
-            new SignInForm(res).show();
+            new SignInForm(theme).show();
             SessionManager.pref.clearAll();
             Storage.getInstance().clearStorage();
             Storage.getInstance().clearCache();

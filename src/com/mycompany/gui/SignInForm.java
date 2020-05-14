@@ -37,7 +37,6 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import com.mycompany.Entities.Utilisateur;
-import com.mycompany.Service.ServiceUtilisateur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class SignInForm extends BaseForm {
 
         );
                l.addActionListener((e) ->{
-                   new ActivateForm(res).show();
+                //   new ActivateForm(res).show();
                });
 
 
@@ -99,15 +98,15 @@ public class SignInForm extends BaseForm {
         signIn.requestFocus();
        signIn.addActionListener((e) ->{
            
-                   if(username.getText().equals("jihen") && password.getText().equals("1234"))
-                          new AcceuillForm(res).show();
+                   if(username.getText().equals("jihen") && password.getText().equals("1234")){}
+                       //   new AcceuillForm(res).show();
      
                         
                    else
                    {
 //InfiniteProgress ip = new InfiniteProgress();
    //      final Dialog ipDlg = ip.showInifiniteBlocking();
-        ServiceUtilisateur.getInstance().login(username, password, res);
+      //  ServiceUtilisateur.getInstance().login(username, password, res);
                    }
                     
                 });
@@ -122,9 +121,24 @@ public class SignInForm extends BaseForm {
 
    public ArrayList<Utilisateur> getAllUsers() {
        ArrayList<Utilisateur> users =new ArrayList<>();
-       users = ServiceUtilisateur.getInstance().getAllUsers();
+     //  users = ServiceUtilisateur.getInstance().getAllUsers();
 
        return users;
         
     }
+   
+   /*
+    Validator val = new Validator();
+        val.setShowErrorMessageForFocusedComponent(true);
+        val.addConstraint(username,
+                new GroupConstraint(
+                        new LengthConstraint(1, "Username vide !"),
+                        new RegexConstraint("^([a-zA-Z]*)$", "Veuillez saisir que des caracteres")));
+        val.addConstraint(password, new LengthConstraint(1, "Mot de passe vide !"));
+
+        val.addSubmitButtons(connect);
+    }
+   
+   
+   */
 }

@@ -37,7 +37,7 @@ public class CleanModern {
     private Resources theme;
 
     public void init(Object context) {
-        theme = UIManager.initFirstTheme("/theme");
+        theme = UIManager.initFirstTheme("/theme_1");
 
         // Disable the global toolbar as we want a layered toolbar
         Toolbar.setGlobalToolbar(false);
@@ -51,7 +51,7 @@ public class CleanModern {
             current.show();
             return;
         }
-        new SplashScreenForm(theme).show();
+        new WalkthruForm(theme).show();
     }
 
     public void stop() {
